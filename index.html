@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java → Spring Boot: 30-Day Mastery Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #f97316;
+    --accent2: #3b82f6;
+    --accent3: #10b981;
+    --accent4: #8b5cf6;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --highlight: #fbbf24;
+    --red: #ef4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'JetBrains Mono', monospace; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+
+  /* HERO */
+  .hero { position: relative; padding: 80px 40px 60px; text-align: center; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(249,115,22,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(59,130,246,0.10) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(30,45,69,0.4) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(30,45,69,0.4) 40px);
+  }
+  .hero-badge { display: inline-block; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(249,115,22,0.4); padding: 6px 16px; border-radius: 2px; margin-bottom: 28px; position: relative; animation: fadeSlideDown 0.6s ease both; }
+  .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(36px, 6vw, 72px); font-weight: 800; line-height: 1.05; position: relative; animation: fadeSlideDown 0.7s ease both; }
+  .hero h1 span.java { color: var(--accent); }
+  .hero h1 span.arrow { color: var(--muted); margin: 0 12px; }
+  .hero h1 span.spring { color: var(--accent2); }
+  .hero-sub { font-size: 13px; color: var(--muted); margin-top: 16px; letter-spacing: 1px; position: relative; animation: fadeSlideDown 0.8s ease both; }
+  .hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; position: relative; animation: fadeSlideDown 0.9s ease both; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 10px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+
+  /* NAV TABS */
+  .nav-tabs { display: flex; gap: 2px; padding: 0 40px; border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; padding: 14px 20px; background: none; border: none; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* PANELS */
+  .panel { display: none; padding: 40px; animation: fadeIn 0.3s ease; }
+  .panel.active { display: block; }
+
+  /* SECTION HEADERS */
+  .section-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; margin-bottom: 32px; line-height: 1.2; }
+
+  /* WEEK CARDS */
+  .weeks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+  .week-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 28px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s; }
+  .week-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .week-card.w1::before { background: var(--accent); } .week-card.w1:hover { border-color: var(--accent); }
+  .week-card.w2::before { background: var(--accent2); } .week-card.w2:hover { border-color: var(--accent2); }
+  .week-card.w3::before { background: var(--accent3); } .week-card.w3:hover { border-color: var(--accent3); }
+  .week-card.w4::before { background: var(--accent4); } .week-card.w4:hover { border-color: var(--accent4); }
+  .week-num { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .w1 .week-num { color: var(--accent); } .w2 .week-num { color: var(--accent2); } .w3 .week-num { color: var(--accent3); } .w4 .week-num { color: var(--accent4); }
+  .week-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 14px; }
+  .week-days { display: flex; flex-direction: column; gap: 8px; }
+  .day-item { display: flex; flex-direction: column; gap: 6px; padding: 12px; background: var(--surface2); border-radius: 3px; font-size: 12px; }
+  .day-header { display: flex; gap: 12px; align-items: flex-start; }
+  .day-num { font-weight: 600; min-width: 32px; color: var(--muted); flex-shrink: 0; }
+  .day-topic { color: var(--text); line-height: 1.5; flex: 1; }
+  .day-tag { font-size: 9px; letter-spacing: 1px; padding: 2px 7px; border-radius: 2px; white-space: nowrap; align-self: flex-start; flex-shrink: 0; }
+  .tag-core { background: rgba(249,115,22,0.15); color: var(--accent); }
+  .tag-oop { background: rgba(59,130,246,0.15); color: var(--accent2); }
+  .tag-spring { background: rgba(16,185,129,0.15); color: var(--accent3); }
+  .tag-project { background: rgba(139,92,246,0.15); color: var(--accent4); }
+  .day-links { display: flex; gap: 6px; flex-wrap: wrap; padding-left: 44px; }
+  .day-link { font-size: 9px; letter-spacing: 0.5px; padding: 3px 9px; border-radius: 2px; text-decoration: none; transition: opacity 0.15s; border: 1px solid; display: inline-flex; align-items: center; gap: 4px; }
+  .day-link:hover { opacity: 0.75; }
+  .day-link.yt { background: rgba(255,0,0,0.1); border-color: rgba(255,0,0,0.3); color: #ff6b6b; }
+  .day-link.doc { background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.3); color: var(--accent2); }
+  .day-link.practice { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: var(--accent3); }
+  .week-outcome { margin-top: 16px; padding: 12px; background: rgba(255,255,255,0.03); border-left: 2px solid; font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .w1 .week-outcome { border-color: var(--accent); } .w2 .week-outcome { border-color: var(--accent2); } .w3 .week-outcome { border-color: var(--accent3); } .w4 .week-outcome { border-color: var(--accent4); }
+
+  /* RESOURCES PANEL */
+  .res-week { margin-bottom: 52px; }
+  .res-week-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+  .res-week-badge { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 2px; letter-spacing: 1px; }
+  .rw1 .res-week-badge { background: rgba(249,115,22,0.15); color: var(--accent); border: 1px solid rgba(249,115,22,0.3); }
+  .rw2 .res-week-badge { background: rgba(59,130,246,0.15); color: var(--accent2); border: 1px solid rgba(59,130,246,0.3); }
+  .rw3 .res-week-badge { background: rgba(16,185,129,0.15); color: var(--accent3); border: 1px solid rgba(16,185,129,0.3); }
+  .rw4 .res-week-badge { background: rgba(139,92,246,0.15); color: var(--accent4); border: 1px solid rgba(139,92,246,0.3); }
+  .res-week-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; }
+  .res-days { display: flex; flex-direction: column; gap: 16px; }
+  .res-day-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .res-day-header { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+  .res-day-num { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--muted); min-width: 36px; padding-top: 2px; }
+  .res-day-info { flex: 1; }
+  .res-day-topic { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .res-day-desc { font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .res-day-body { padding: 16px 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 780px) { .res-day-body { grid-template-columns: 1fr; } }
+  .res-col-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .res-col-label.yt { color: #ff6b6b; }
+  .res-col-label.doc { color: var(--accent2); }
+  .res-col-label.ex { color: var(--accent3); }
+  .res-link { display: block; font-size: 11px; color: var(--muted); text-decoration: none; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.5; transition: color 0.15s; }
+  .res-link:hover { color: var(--text); }
+  .res-link:last-child { border-bottom: none; }
+  .res-link::before { content: '→ '; }
+  .code-snippet { background: #0d1117; border: 1px solid var(--border); border-radius: 3px; padding: 12px 14px; font-size: 11px; line-height: 1.7; margin-top: 8px; overflow-x: auto; }
+  .code-snippet .kw { color: #ff7b72; }
+  .code-snippet .cl { color: #79c0ff; }
+  .code-snippet .cm { color: #8b949e; }
+  .code-snippet .st { color: #a5d6ff; }
+  .code-snippet .an { color: #ffa657; }
+  .ex-task { font-size: 11px; color: var(--muted); line-height: 1.7; }
+  .ex-task strong { color: var(--accent3); display: block; margin-bottom: 4px; }
+
+  /* MINDSET PANEL */
+  .mindset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .mindset-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 24px; }
+  .mindset-icon { font-size: 28px; margin-bottom: 12px; }
+  .mindset-title { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--highlight); }
+  .mindset-body { font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .vs-block { display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; }
+  .vs-col { flex: 1; min-width: 240px; background: var(--surface); border-radius: 4px; padding: 24px; }
+  .vs-col.beginner { border-top: 3px solid var(--red); }
+  .vs-col.expert { border-top: 3px solid var(--accent3); }
+  .vs-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+  .vs-col.beginner .vs-label { color: var(--red); } .vs-col.expert .vs-label { color: var(--accent3); }
+  .vs-item { display: flex; gap: 10px; margin-bottom: 12px; font-size: 12px; line-height: 1.6; color: var(--muted); }
+  .vs-item::before { content: '▸'; flex-shrink: 0; margin-top: 2px; }
+  .vs-col.beginner .vs-item::before { color: var(--red); } .vs-col.expert .vs-item::before { color: var(--accent3); }
+
+  /* MISTAKES */
+  .mistake-list { display: flex; flex-direction: column; gap: 16px; max-width: 860px; }
+  .mistake-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .mistake-header { display: flex; align-items: center; gap: 16px; padding: 18px 24px; background: rgba(239,68,68,0.05); border-bottom: 1px solid var(--border); }
+  .mistake-num { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--red); min-width: 32px; }
+  .mistake-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
+  .mistake-body { padding: 18px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 600px) { .mistake-body { grid-template-columns: 1fr; } }
+  .mistake-why, .mistake-fix { font-size: 12px; line-height: 1.7; color: var(--muted); }
+  .mistake-why strong { color: #f87171; display: block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+  .mistake-fix strong { color: var(--accent3); display: block; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
+
+  /* ASSESSMENT */
+  .assessment-intro { max-width: 680px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 28px; margin-bottom: 32px; font-size: 13px; line-height: 1.8; color: var(--muted); }
+  .q-grid { display: flex; flex-direction: column; gap: 20px; max-width: 860px; }
+  .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 24px; }
+  .q-level { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .level-basic { color: var(--accent3); } .level-mid { color: var(--highlight); } .level-advanced { color: #f87171; }
+  .q-text { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; margin-bottom: 14px; line-height: 1.4; }
+  .q-hint { font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .q-hint code { background: var(--surface2); padding: 2px 6px; border-radius: 2px; color: var(--accent2); }
+
+  /* PROJECTS */
+  .projects-timeline { position: relative; max-width: 720px; }
+  .projects-timeline::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3), var(--accent4)); }
+  .project-item { display: flex; gap: 28px; margin-bottom: 32px; }
+  .project-dot { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; flex-shrink: 0; z-index: 1; }
+  .project-item:nth-child(1) .project-dot { background: rgba(249,115,22,0.2); border: 1px solid var(--accent); color: var(--accent); }
+  .project-item:nth-child(2) .project-dot { background: rgba(59,130,246,0.2); border: 1px solid var(--accent2); color: var(--accent2); }
+  .project-item:nth-child(3) .project-dot { background: rgba(16,185,129,0.2); border: 1px solid var(--accent3); color: var(--accent3); }
+  .project-item:nth-child(4) .project-dot { background: rgba(139,92,246,0.2); border: 1px solid var(--accent4); color: var(--accent4); }
+  .project-content { flex: 1; }
+  .project-week { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .project-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .project-desc { font-size: 12px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+  .feature-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .feature-tag { font-size: 10px; padding: 4px 10px; border-radius: 2px; letter-spacing: 0.5px; }
+  .project-item:nth-child(1) .feature-tag { background: rgba(249,115,22,0.1); color: var(--accent); border: 1px solid rgba(249,115,22,0.3); }
+  .project-item:nth-child(2) .feature-tag { background: rgba(59,130,246,0.1); color: var(--accent2); border: 1px solid rgba(59,130,246,0.3); }
+  .project-item:nth-child(3) .feature-tag { background: rgba(16,185,129,0.1); color: var(--accent3); border: 1px solid rgba(16,185,129,0.3); }
+  .project-item:nth-child(4) .feature-tag { background: rgba(139,92,246,0.1); color: var(--accent4); border: 1px solid rgba(139,92,246,0.3); }
+
+  @keyframes fadeSlideDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  @media (max-width: 640px) { .hero { padding: 60px 20px 40px; } .panel { padding: 24px 16px; } .nav-tabs { padding: 0 16px; } .hero-stats { gap: 24px; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">// Professional Mastery Program</div>
+  <h1><span class="java">Core Java</span><span class="arrow">→</span><span class="spring">Spring Boot</span></h1>
+  <p class="hero-sub">30-Day Practical Mastery Roadmap · Beginner to Production-Ready</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">30</div><div class="stat-label">Days</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Phases</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Projects</div></div>
+    <div class="stat"><div class="stat-num">80+</div><div class="stat-label">Resources</div></div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('roadmap',this)">📍 Roadmap</button>
+  <button class="tab-btn" onclick="switchTab('resources',this)">📚 Resources</button>
+  <button class="tab-btn" onclick="switchTab('projects',this)">🔨 Projects</button>
+  <button class="tab-btn" onclick="switchTab('mindset',this)">🧠 Expert Mindset</button>
+  <button class="tab-btn" onclick="switchTab('mistakes',this)">⚠ Common Mistakes</button>
+  <button class="tab-btn" onclick="switchTab('assessment',this)">📋 Self-Assessment</button>
+</div>
+
+<!-- ===== ROADMAP PANEL ===== -->
+<div id="panel-roadmap" class="panel active">
+  <div class="section-label">// 30-day breakdown</div>
+  <h2 class="section-title">Your Learning Roadmap</h2>
+  <div class="weeks-grid">
+
+    <div class="week-card w1">
+      <div class="week-num">Week 1 · Days 1–7</div>
+      <div class="week-title">Core Java Foundations</div>
+      <div class="week-days">
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D1</span><span class="day-topic">JDK setup, first program, data types, variables, operators</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=eIrMbAQSU34" target="_blank">▶ Java in 14 min</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html" target="_blank">📄 Oracle Basics</a>
+            <a class="day-link practice" href="https://exercism.org/tracks/java" target="_blank">✏ Exercism Java</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D2</span><span class="day-topic">Control flow — if/else, switch, loops (for, while, do-while)</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=9cHJq5uGHmM" target="_blank">▶ Loops & Flow (Mosh)</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/flow.html" target="_blank">📄 Oracle Flow</a>
+            <a class="day-link practice" href="https://www.w3schools.com/java/java_conditions.asp" target="_blank">✏ W3Schools Drills</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D3</span><span class="day-topic">Arrays & Strings — manipulation, methods, StringBuilder</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=xk4_1vDrzzo" target="_blank">▶ Arrays (Bro Code)</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/data/strings.html" target="_blank">📄 String API Docs</a>
+            <a class="day-link practice" href="https://leetcode.com/tag/array/" target="_blank">✏ LeetCode Easy Arrays</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D4</span><span class="day-topic">Methods — params, return types, overloading, scope, recursion</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=_2Cvy8aBKGs" target="_blank">▶ Methods Deep Dive</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/javaOO/methods.html" target="_blank">📄 Oracle Methods</a>
+            <a class="day-link practice" href="https://www.codingbat.com/java" target="_blank">✏ CodingBat Java</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D5</span><span class="day-topic">OOP Part 1 — Classes, objects, constructors, this keyword</span><span class="day-tag tag-oop">OOP</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=IUqKuGNasdM" target="_blank">▶ OOP Intro (Mosh)</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/javaOO/classes.html" target="_blank">📄 Oracle OOP</a>
+            <a class="day-link practice" href="https://www.hackerrank.com/domains/java" target="_blank">✏ HackerRank OOP</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D6</span><span class="day-topic">OOP Part 2 — Inheritance, polymorphism, method overriding</span><span class="day-tag tag-oop">OOP</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=Zs342ePFvRI" target="_blank">▶ Inheritance (Mosh)</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html" target="_blank">📄 Oracle Inheritance</a>
+            <a class="day-link practice" href="https://www.hackerrank.com/challenges/java-inheritance-1/problem" target="_blank">✏ HackerRank Challenge</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D7</span><span class="day-topic">Mini-project: Bank Account class with transactions + review</span><span class="day-tag tag-project">PROJECT</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=xTtL88cMnro" target="_blank">▶ Java Bank Project</a>
+            <a class="day-link doc" href="https://github.com/eugenp/tutorials/tree/master/core-java-modules" target="_blank">📄 Baeldung Examples</a>
+            <a class="day-link practice" href="https://github.com/topics/java-bank-application" target="_blank">✏ GitHub Samples</a>
+          </div>
+        </div>
+      </div>
+      <div class="week-outcome">✓ Outcome: Write clean Java classes, model real-world objects, understand how memory works with objects vs primitives.</div>
+    </div>
+
+    <div class="week-card w2">
+      <div class="week-num">Week 2 · Days 8–14</div>
+      <div class="week-title">Java Mastery — Interfaces, Collections, Streams</div>
+      <div class="week-days">
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D8</span><span class="day-topic">Interfaces & Abstract classes — when and why to use each</span><span class="day-tag tag-oop">OOP</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=HvPlEJ3LHgE" target="_blank">▶ Interfaces vs Abstract</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html" target="_blank">📄 Oracle Interfaces</a>
+            <a class="day-link practice" href="https://www.hackerrank.com/challenges/java-interface/problem" target="_blank">✏ HackerRank</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D9</span><span class="day-topic">Collections — List, Set, Map, Queue + iteration patterns</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=GdAon80-0KA" target="_blank">▶ Java Collections (Amigoscode)</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/collections/index.html" target="_blank">📄 Collections Tutorial</a>
+            <a class="day-link practice" href="https://www.baeldung.com/java-collections" target="_blank">✏ Baeldung Exercises</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D10</span><span class="day-topic">Generics — type safety, bounded types, wildcards</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=K1iu1kXkVoA" target="_blank">▶ Generics Explained</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/generics/index.html" target="_blank">📄 Oracle Generics</a>
+            <a class="day-link practice" href="https://www.baeldung.com/java-generics" target="_blank">✏ Baeldung Guide</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D11</span><span class="day-topic">Exception handling — checked/unchecked, custom exceptions, try-with-resources</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=1XAfapkBQjk" target="_blank">▶ Exceptions (Telusko)</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/essential/exceptions/index.html" target="_blank">📄 Oracle Exceptions</a>
+            <a class="day-link practice" href="https://www.hackerrank.com/challenges/java-exception-handling/problem" target="_blank">✏ HackerRank</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D12</span><span class="day-topic">Lambdas & Functional interfaces — Predicate, Function, Consumer</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=tj5sLSFjVj4" target="_blank">▶ Lambdas (Amigoscode)</a>
+            <a class="day-link doc" href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html" target="_blank">📄 Lambda Tutorial</a>
+            <a class="day-link practice" href="https://www.baeldung.com/java-8-functional-interfaces" target="_blank">✏ Baeldung FP Guide</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D13</span><span class="day-topic">Streams API — filter, map, reduce, collect, flatMap</span><span class="day-tag tag-core">CORE</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=Q93lV3JBKCY" target="_blank">▶ Streams Complete (Amigoscode)</a>
+            <a class="day-link doc" href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" target="_blank">📄 Stream Javadoc</a>
+            <a class="day-link practice" href="https://github.com/amigoscode/java-streams" target="_blank">✏ Stream Exercises</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D14</span><span class="day-topic">Mini-project: Student Management System (CRUD with Collections)</span><span class="day-tag tag-project">PROJECT</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=GoXwIVyNvX0" target="_blank">▶ Java CRUD Console App</a>
+            <a class="day-link doc" href="https://www.baeldung.com/java-collections-interview-questions" target="_blank">📄 Collections Q&A</a>
+            <a class="day-link practice" href="https://leetcode.com/studyplan/top-interview-150/" target="_blank">✏ LeetCode Top 150</a>
+          </div>
+        </div>
+      </div>
+      <div class="week-outcome">✓ Outcome: Write idiomatic modern Java (Java 11+), use the Collections API fluently, handle errors properly and create clean abstractions.</div>
+    </div>
+
+    <div class="week-card w3">
+      <div class="week-num">Week 3 · Days 15–21</div>
+      <div class="week-title">Spring Boot Core — IoC, REST, Data</div>
+      <div class="week-days">
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D15</span><span class="day-topic">Spring Boot intro — IoC, DI, application context, @Component</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=9SGDpanrc8U" target="_blank">▶ Spring Boot (Amigoscode)</a>
+            <a class="day-link doc" href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/" target="_blank">📄 Spring Boot Docs</a>
+            <a class="day-link practice" href="https://start.spring.io" target="_blank">✏ Spring Initializr</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D16</span><span class="day-topic">REST Controllers — @RestController, @GetMapping, @PostMapping, DTOs</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=OVCKBhVkBkc" target="_blank">▶ REST API (Dan Vega)</a>
+            <a class="day-link doc" href="https://spring.io/guides/gs/rest-service/" target="_blank">📄 Spring REST Guide</a>
+            <a class="day-link practice" href="https://www.postman.com/downloads/" target="_blank">✏ Postman Practice</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D17</span><span class="day-topic">Service layer — @Service, business logic separation, @Autowired</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=5vW-_PJUmDI" target="_blank">▶ 3-Layer Architecture</a>
+            <a class="day-link doc" href="https://www.baeldung.com/spring-service-layer-validation" target="_blank">📄 Baeldung Service Layer</a>
+            <a class="day-link practice" href="https://www.baeldung.com/constructor-injection-in-spring" target="_blank">✏ Constructor Injection</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D18</span><span class="day-topic">Spring Data JPA — entities, @Repository, CRUD, H2 DB</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=8SGI_XS5OPw" target="_blank">▶ Spring Data JPA (Amigoscode)</a>
+            <a class="day-link doc" href="https://spring.io/guides/gs/accessing-data-jpa/" target="_blank">📄 JPA Getting Started</a>
+            <a class="day-link practice" href="https://www.baeldung.com/the-persistence-layer-with-spring-data-jpa" target="_blank">✏ Baeldung JPA</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D19</span><span class="day-topic">PostgreSQL integration + relationships (OneToMany, ManyToOne)</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=QwQuro7ekvc" target="_blank">▶ JPA Relationships</a>
+            <a class="day-link doc" href="https://www.baeldung.com/hibernate-one-to-many" target="_blank">📄 OneToMany Guide</a>
+            <a class="day-link practice" href="https://www.postgresql.org/docs/current/tutorial.html" target="_blank">✏ PostgreSQL Tutorial</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D20</span><span class="day-topic">Validation — @Valid, Bean Validation, global exception handler</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=vu4RNsQ2lDE" target="_blank">▶ Spring Validation</a>
+            <a class="day-link doc" href="https://www.baeldung.com/spring-boot-bean-validation" target="_blank">📄 Bean Validation</a>
+            <a class="day-link practice" href="https://www.baeldung.com/exception-handling-for-rest-with-spring" target="_blank">✏ @ControllerAdvice</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D21</span><span class="day-topic">Mini-project: REST API for a Task Manager (full CRUD + relations)</span><span class="day-tag tag-project">PROJECT</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=5PdEmeopJVQ" target="_blank">▶ Full CRUD REST Project</a>
+            <a class="day-link doc" href="https://spring.io/guides" target="_blank">📄 All Spring Guides</a>
+            <a class="day-link practice" href="https://www.baeldung.com/spring-boot-crud-thymeleaf" target="_blank">✏ Baeldung CRUD</a>
+          </div>
+        </div>
+      </div>
+      <div class="week-outcome">✓ Outcome: Build a functional, layered REST API with a real database, proper validation, and clean separation of concerns.</div>
+    </div>
+
+    <div class="week-card w4">
+      <div class="week-num">Week 4 · Days 22–30</div>
+      <div class="week-title">Production-Grade Spring Boot</div>
+      <div class="week-days">
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D22</span><span class="day-topic">Spring Security basics — authentication, password encoding, filters</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=her_7pa0vrg" target="_blank">▶ Spring Security (Amigoscode)</a>
+            <a class="day-link doc" href="https://spring.io/guides/gs/securing-web/" target="_blank">📄 Security Guide</a>
+            <a class="day-link practice" href="https://www.baeldung.com/security-spring" target="_blank">✏ Baeldung Security</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D23</span><span class="day-topic">JWT authentication — stateless auth, token generation, filter chain</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=KxqlJblhzfI" target="_blank">▶ JWT Spring Boot (Bouali)</a>
+            <a class="day-link doc" href="https://www.baeldung.com/spring-security-oauth-jwt" target="_blank">📄 JWT with Spring</a>
+            <a class="day-link practice" href="https://jwt.io/" target="_blank">✏ JWT Debugger</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D24</span><span class="day-topic">Testing — JUnit 5, Mockito, @SpringBootTest, MockMvc</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=jqwZthuBmZY" target="_blank">▶ Spring Boot Testing (Amigoscode)</a>
+            <a class="day-link doc" href="https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.testing" target="_blank">📄 Testing Docs</a>
+            <a class="day-link practice" href="https://www.baeldung.com/spring-boot-testing" target="_blank">✏ Baeldung Testing</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D25</span><span class="day-topic">Pagination, sorting, filtering — Pageable, Specifications</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=oRupVKECrOc" target="_blank">▶ Pagination & Sorting</a>
+            <a class="day-link doc" href="https://www.baeldung.com/spring-data-jpa-pagination-sorting" target="_blank">📄 JPA Pagination</a>
+            <a class="day-link practice" href="https://www.baeldung.com/rest-api-pagination-in-spring" target="_blank">✏ REST Pagination</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D26</span><span class="day-topic">Logging, @ConfigurationProperties, profiles (dev/prod)</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=4OEhB_GNdkk" target="_blank">▶ Spring Profiles</a>
+            <a class="day-link doc" href="https://www.baeldung.com/spring-profiles" target="_blank">📄 Profiles Guide</a>
+            <a class="day-link practice" href="https://www.baeldung.com/spring-boot-logging" target="_blank">✏ Logging Setup</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D27</span><span class="day-topic">Docker basics — containerize your Spring Boot app</span><span class="day-tag tag-spring">SPRING</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=p28piYY_wv8" target="_blank">▶ Docker + Spring Boot</a>
+            <a class="day-link doc" href="https://spring.io/guides/gs/spring-boot-docker/" target="_blank">📄 Spring Docker Guide</a>
+            <a class="day-link practice" href="https://docs.docker.com/get-started/" target="_blank">✏ Docker Get Started</a>
+          </div>
+        </div>
+        <div class="day-item">
+          <div class="day-header"><span class="day-num">D28-30</span><span class="day-topic">Capstone: Full-stack REST API (Auth + CRUD + Tests + Docker)</span><span class="day-tag tag-project">PROJECT</span></div>
+          <div class="day-links">
+            <a class="day-link yt" href="https://www.youtube.com/watch?v=BDFpQ6Tig64" target="_blank">▶ Full Spring Boot Project</a>
+            <a class="day-link doc" href="https://springdoc.org/" target="_blank">📄 SpringDoc/OpenAPI</a>
+            <a class="day-link practice" href="https://github.com/topics/spring-boot-rest-api" target="_blank">✏ GitHub Examples</a>
+          </div>
+        </div>
+      </div>
+      <div class="week-outcome">✓ Outcome: Deploy a secured, tested, containerized Spring Boot API you can put on your resume and show in interviews.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== RESOURCES PANEL ===== -->
+<div id="panel-resources" class="panel">
+  <div class="section-label">// videos · docs · practice</div>
+  <h2 class="section-title">Study Materials by Day</h2>
+
+  <!-- WEEK 1 -->
+  <div class="res-week rw1">
+    <div class="res-week-header">
+      <span class="res-week-badge">Week 1</span>
+      <span class="res-week-title">Core Java Foundations</span>
+    </div>
+    <div class="res-days">
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 1</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">JDK Setup, Data Types, Variables, Operators</div>
+            <div class="res-day-desc">Install JDK 21, IntelliJ IDEA (Community). Write your first Hello World. Understand primitive vs reference types. Practice arithmetic, comparison, and logical operators.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=eIrMbAQSU34" target="_blank">Java Full Course for Beginners – Mosh Hamedani (2h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=A74TOX803D0" target="_blank">Java Tutorial for Beginners – Programming with Mosh</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=xk4_1vDrzzo" target="_blank">Java Data Types Explained – Bro Code</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/index.html" target="_blank">Oracle: Java Language Basics</a>
+            <a class="res-link" href="https://www.baeldung.com/java-primitives" target="_blank">Baeldung: Primitives vs Objects in Java</a>
+            <a class="res-link" href="https://www.w3schools.com/java/java_data_types.asp" target="_blank">W3Schools: Java Data Types Reference</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Write a program that takes a temperature in Celsius and prints it in Fahrenheit AND Kelvin. Use variables, arithmetic operators, and System.out.println. Then add a boolean check: if temp &lt; 0, print "Freezing!".
+            </div>
+            <a class="res-link" href="https://exercism.org/tracks/java/exercises" target="_blank">Exercism: Java Track Exercises</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 2</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Control Flow — if/else, switch, loops</div>
+            <div class="res-day-desc">Master conditional logic and iteration. Understand when to use for vs while. Practice loop patterns: counting, summing, searching in arrays.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=9cHJq5uGHmM" target="_blank">Java Control Flow – Mosh (40 min)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=ksNnRJvCDDo" target="_blank">Java Loops Tutorial – Bro Code</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=2sFp1Oa5jbI" target="_blank">Switch Expressions Java 14+ – Coding with John</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/javase/tutorial/java/nutsandbolts/flow.html" target="_blank">Oracle: Control Flow Statements</a>
+            <a class="res-link" href="https://www.baeldung.com/java-for-loop" target="_blank">Baeldung: Java for Loop Guide</a>
+            <a class="res-link" href="https://www.baeldung.com/java-switch" target="_blank">Baeldung: Switch Statement & Expression</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Write a FizzBuzz program (1–100). Then write a number guessing game: computer picks 1–100, user inputs guesses, program says "higher"/"lower"/correct. Use a while loop with a counter for the number of attempts.
+            </div>
+            <a class="res-link" href="https://www.codingbat.com/java/Logic-1" target="_blank">CodingBat: Logic-1 Drills</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 3</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Arrays & Strings</div>
+            <div class="res-day-desc">Work with 1D arrays, multi-dimensional arrays, String methods, and StringBuilder. Understand why String is immutable and when StringBuilder matters for performance.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=xk4_1vDrzzo" target="_blank">Java Arrays Full Course – Bro Code (1h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=bJ2N0kn5nXc" target="_blank">Java String Methods – Coding with John</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=RWn8lB0xtZM" target="_blank">StringBuilder vs String – Java Brains</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" target="_blank">Java String Javadoc (Java 21)</a>
+            <a class="res-link" href="https://www.baeldung.com/java-string" target="_blank">Baeldung: String in Java</a>
+            <a class="res-link" href="https://www.baeldung.com/java-stringbuilder-vs-string" target="_blank">Baeldung: StringBuilder vs String</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Given a String sentence, count word frequency using an array. Then reverse a String without using StringBuilder.reverse(). Finally: check if a string is a palindrome.
+            </div>
+            <a class="res-link" href="https://leetcode.com/problems/reverse-string/" target="_blank">LeetCode: Reverse String</a>
+            <a class="res-link" href="https://leetcode.com/problems/valid-palindrome/" target="_blank">LeetCode: Valid Palindrome</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 4</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Methods — Parameters, Overloading, Recursion</div>
+            <div class="res-day-desc">Learn to decompose programs into methods. Understand pass-by-value, method overloading, static vs instance methods, and when to use recursion vs iteration.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=_2Cvy8aBKGs" target="_blank">Java Methods Complete Guide – Bro Code</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=B9BN48MSVAQ" target="_blank">Recursion in Java – Coding with John</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=kkLEaGKEFCM" target="_blank">Method Overloading Explained</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/javase/tutorial/java/javaOO/methods.html" target="_blank">Oracle: Defining Methods</a>
+            <a class="res-link" href="https://www.baeldung.com/java-method-overloading" target="_blank">Baeldung: Method Overloading</a>
+            <a class="res-link" href="https://www.baeldung.com/java-recursion" target="_blank">Baeldung: Recursion Guide</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Write overloaded add() methods for int, double, and String concatenation. Write a recursive fibonacci() and a factorial(). Then refactor FizzBuzz from Day 2 into a method that returns a String instead of printing.
+            </div>
+            <a class="res-link" href="https://www.codingbat.com/java/Recursion-1" target="_blank">CodingBat: Recursion Drills</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 5–6</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">OOP — Classes, Inheritance, Polymorphism</div>
+            <div class="res-day-desc">Model real-world objects as Java classes. Understand inheritance hierarchies, method overriding, and runtime polymorphism. The foundation of every framework you'll ever use.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=IUqKuGNasdM" target="_blank">Java OOP Full Course – Mosh (2h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=Zs342ePFvRI" target="_blank">Inheritance & Polymorphism – Mosh</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=WLDCOBmXUig" target="_blank">4 Pillars of OOP – Coding with John</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html" target="_blank">Oracle: Inheritance</a>
+            <a class="res-link" href="https://www.baeldung.com/java-polymorphism" target="_blank">Baeldung: Polymorphism in Java</a>
+            <a class="res-link" href="https://www.baeldung.com/solid-principles" target="_blank">Baeldung: SOLID Principles</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Create Shape (abstract) → Circle, Rectangle, Triangle. Each implements area() and perimeter(). Store all shapes in a Shape[] array. Loop and call area() on each — observe polymorphism. Print a report sorted by area.
+            </div>
+            <a class="res-link" href="https://www.hackerrank.com/challenges/java-inheritance-2/problem" target="_blank">HackerRank: Inheritance Challenge</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="res-week rw2">
+    <div class="res-week-header">
+      <span class="res-week-badge">Week 2</span>
+      <span class="res-week-title">Interfaces, Collections, Streams, Exceptions</span>
+    </div>
+    <div class="res-days">
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 8</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Interfaces & Abstract Classes</div>
+            <div class="res-day-desc">Interfaces define contracts. Abstract classes share implementation. Know when to use which. Understand default methods, functional interfaces, and why Spring relies on interfaces everywhere.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=HvPlEJ3LHgE" target="_blank">Interface vs Abstract Class – Coding with John</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=gI_GpHHSrjc" target="_blank">Java Interfaces Full Guide – Amigoscode</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/javase/tutorial/java/IandI/createinterface.html" target="_blank">Oracle: Interfaces Tutorial</a>
+            <a class="res-link" href="https://www.baeldung.com/java-interface-default-method-vs-abstract-class" target="_blank">Baeldung: Interface vs Abstract</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Create a Payable interface with calculatePay(). Implement it in FullTimeEmployee and Contractor differently. Store both in a List&lt;Payable&gt; and call calculatePay() on each. Add a default method in Payable that prints a receipt.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 9–10</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Collections & Generics</div>
+            <div class="res-day-desc">ArrayList, LinkedList, HashSet, TreeSet, HashMap, LinkedHashMap — know when to use each. Understand time complexity of operations. Generics give you type-safe collections you can reuse.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=GdAon80-0KA" target="_blank">Java Collections Framework – Amigoscode (1h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=K1iu1kXkVoA" target="_blank">Java Generics – Coding with John</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=vtv7zOIpmVs" target="_blank">HashMap Full Guide – Coding with John</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/javase/tutorial/collections/index.html" target="_blank">Oracle: Collections Framework</a>
+            <a class="res-link" href="https://www.baeldung.com/java-collections" target="_blank">Baeldung: Collections Overview</a>
+            <a class="res-link" href="https://www.baeldung.com/java-generics" target="_blank">Baeldung: Java Generics Guide</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Build a word frequency counter: read a sentence, store each word and its count in a HashMap. Print top 5 most frequent words. Then build a generic Pair&lt;A, B&gt; class that can hold any two types together.
+            </div>
+            <a class="res-link" href="https://leetcode.com/problems/top-k-frequent-elements/" target="_blank">LeetCode: Top K Frequent Elements</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 11</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Exception Handling</div>
+            <div class="res-day-desc">Distinguish checked from unchecked exceptions. Create custom domain exceptions. Use try-with-resources for auto-closeable resources. This is the pattern Spring Boot's error handling is built on.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=1XAfapkBQjk" target="_blank">Java Exceptions Complete Guide – Telusko</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=OIozDnGYqIU" target="_blank">Custom Exceptions in Java – Coding with John</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/javase/tutorial/essential/exceptions/index.html" target="_blank">Oracle: Exceptions Tutorial</a>
+            <a class="res-link" href="https://www.baeldung.com/java-exceptions" target="_blank">Baeldung: Exception Handling</a>
+            <a class="res-link" href="https://www.baeldung.com/java-new-custom-exception" target="_blank">Baeldung: Custom Exceptions</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Create InsufficientFundsException (RuntimeException). Add it to your Day 7 Bank project — throw it when withdraw amount exceeds balance. Catch it in main and print a friendly message. Never catch Exception broadly.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 12–13</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Lambdas & Streams API</div>
+            <div class="res-day-desc">Lambdas eliminate boilerplate. Streams let you process collections declaratively — filter, transform, reduce — without loops. This is the most important modern Java skill for Spring Boot developers.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=tj5sLSFjVj4" target="_blank">Java Lambdas & Streams – Amigoscode (2h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=Q93lV3JBKCY" target="_blank">Java Streams Complete – Amigoscode</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=t1-YZ6bF-g0" target="_blank">Streams Practical Examples – Java Brains</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html" target="_blank">Oracle: Lambda Expressions</a>
+            <a class="res-link" href="https://www.baeldung.com/java-8-streams" target="_blank">Baeldung: Java 8 Streams</a>
+            <a class="res-link" href="https://www.baeldung.com/java-8-functional-interfaces" target="_blank">Baeldung: Functional Interfaces</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Given a List&lt;Employee&gt; with name, department, salary: (1) filter employees earning over 50k, (2) group by department using Collectors.groupingBy(), (3) find highest salary per department, (4) sort by name and collect to List.
+            </div>
+            <a class="res-link" href="https://github.com/amigoscode/java-streams" target="_blank">Amigoscode Stream Exercises on GitHub</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="res-week rw3">
+    <div class="res-week-header">
+      <span class="res-week-badge">Week 3</span>
+      <span class="res-week-title">Spring Boot — REST, JPA, Validation</span>
+    </div>
+    <div class="res-days">
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 15</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">IoC, DI, Spring Application Context</div>
+            <div class="res-day-desc">Understand how Spring Boot auto-configures your app. Learn the difference between @Component, @Service, @Repository. Understand constructor injection vs field injection and why constructor injection wins.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=9SGDpanrc8U" target="_blank">Spring Boot Full Course – Amigoscode (4h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=cSn4N68NyQ8" target="_blank">Spring IoC & DI Explained – Java Brains</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=GB8k2-Egfv0" target="_blank">Spring Bean Lifecycle – Marco Behler</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.spring.io/spring-framework/docs/current/reference/html/core.html" target="_blank">Spring Core: IoC Container Docs</a>
+            <a class="res-link" href="https://www.baeldung.com/inversion-control-and-dependency-injection-in-spring" target="_blank">Baeldung: IoC & DI in Spring</a>
+            <a class="res-link" href="https://www.baeldung.com/constructor-injection-in-spring" target="_blank">Baeldung: Constructor Injection Guide</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Create a Spring Boot app with a GreetingService bean that has a greet(String name) method. Inject it into a CommandLineRunner (constructor injection). Run the app and verify the greeting prints at startup. Add a second implementation and switch it with @Primary.
+            </div>
+            <a class="res-link" href="https://start.spring.io" target="_blank">Generate project at start.spring.io</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 16–17</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">REST Controllers & Service Layer</div>
+            <div class="res-day-desc">Build your first REST endpoints. Understand HTTP methods, status codes, and request/response bodies. Create DTOs to shape API responses. Enforce strict separation: Controllers call Services, never touch repositories.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=OVCKBhVkBkc" target="_blank">Building REST APIs – Dan Vega</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=5vW-_PJUmDI" target="_blank">Spring 3-Layer Architecture – Daily Code Buffer</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=9oq7Y8n1t00" target="_blank">REST API Best Practices – Amigoscode</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://spring.io/guides/gs/rest-service/" target="_blank">Spring: Building a REST Service</a>
+            <a class="res-link" href="https://www.baeldung.com/spring-mvc-tutorial" target="_blank">Baeldung: Spring MVC Guide</a>
+            <a class="res-link" href="https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application" target="_blank">Baeldung: Entity to DTO Conversion</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Create GET /users (list), POST /users (create), GET /users/{id}, DELETE /users/{id}. Store users in a List in the service (no DB yet). Use UserRequestDTO for input, UserResponseDTO for output. Test all endpoints in Postman.
+            </div>
+            <a class="res-link" href="https://www.postman.com/downloads/" target="_blank">Download Postman</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 18–19</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Spring Data JPA + PostgreSQL</div>
+            <div class="res-day-desc">Connect to a real database. Define entities with @Entity, @Id, @GeneratedValue. Use JpaRepository for CRUD. Model relationships: OneToMany, ManyToOne. Understand how JPA translates Java objects to SQL.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=8SGI_XS5OPw" target="_blank">Spring Data JPA Full Course – Amigoscode</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=QwQuro7ekvc" target="_blank">JPA Relationships Explained – Amigoscode</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=pq-K9XeUEAI" target="_blank">PostgreSQL + Spring Boot Setup – Daily Code Buffer</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://spring.io/guides/gs/accessing-data-jpa/" target="_blank">Spring: Accessing Data with JPA</a>
+            <a class="res-link" href="https://www.baeldung.com/the-persistence-layer-with-spring-data-jpa" target="_blank">Baeldung: Spring Data JPA Tutorial</a>
+            <a class="res-link" href="https://www.baeldung.com/hibernate-one-to-many" target="_blank">Baeldung: OneToMany Relationship</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Create a Post and Comment entity (one Post has many Comments). Implement endpoints: create post, add comment to post, get all comments for a post. Use PostgreSQL. Verify with pgAdmin or DBeaver that rows are being inserted correctly.
+            </div>
+            <a class="res-link" href="https://www.postgresql.org/download/" target="_blank">Install PostgreSQL</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 20</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Validation & Global Exception Handling</div>
+            <div class="res-day-desc">Validate incoming requests with @Valid and Bean Validation annotations. Create a @ControllerAdvice that catches domain exceptions and returns proper HTTP error responses. Never expose raw stack traces to clients.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=vu4RNsQ2lDE" target="_blank">Spring Validation Complete – Amigoscode</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=9_bQ_UVBaHw" target="_blank">Exception Handling in Spring Boot – Daily Code Buffer</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://www.baeldung.com/spring-boot-bean-validation" target="_blank">Baeldung: Bean Validation in Spring Boot</a>
+            <a class="res-link" href="https://www.baeldung.com/exception-handling-for-rest-with-spring" target="_blank">Baeldung: REST Exception Handling</a>
+            <a class="res-link" href="https://www.baeldung.com/global-error-handler-in-a-spring-rest-api" target="_blank">Baeldung: Global Error Handler</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Add @NotNull, @Email, @Size to your UserRequestDTO. Create ResourceNotFoundException. Build a GlobalExceptionHandler with @ControllerAdvice. When user not found, return 404 with a JSON body: {"error":"User not found","id":99}. Test with Postman.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="res-week rw4">
+    <div class="res-week-header">
+      <span class="res-week-badge">Week 4</span>
+      <span class="res-week-title">Production-Grade — Security, Testing, Docker</span>
+    </div>
+    <div class="res-days">
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 22–23</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Spring Security + JWT Authentication</div>
+            <div class="res-day-desc">Secure your API with Spring Security. Implement stateless JWT auth: user registers, logs in, receives a token, uses it in Authorization header. Understand the Security Filter Chain and how requests flow through it.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=her_7pa0vrg" target="_blank">Spring Security 6 Full Course – Amigoscode (3h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=KxqlJblhzfI" target="_blank">JWT Authentication – Ali Bouali (2h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=b9O9NI-RJ3o" target="_blank">Spring Security + JWT in 1h – Daily Code Buffer</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://spring.io/guides/gs/securing-web/" target="_blank">Spring: Securing a Web Application</a>
+            <a class="res-link" href="https://www.baeldung.com/spring-security-oauth-jwt" target="_blank">Baeldung: JWT with Spring Security</a>
+            <a class="res-link" href="https://docs.spring.io/spring-security/reference/index.html" target="_blank">Official Spring Security Reference</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Add auth to your Task Manager from Day 21. Implement POST /auth/register and POST /auth/login (returns JWT). Protect all /tasks/** endpoints — only authenticated users access them. Verify with Postman: no token = 403. Valid token = 200.
+            </div>
+            <a class="res-link" href="https://jwt.io/" target="_blank">JWT.io Debugger Tool</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 24</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Testing — JUnit 5, Mockito, MockMvc</div>
+            <div class="res-day-desc">Write unit tests for Service layer using Mockito to mock repositories. Write integration tests for Controllers using MockMvc and @SpringBootTest. Test the happy path AND error cases. Aim for 70%+ coverage on Service classes.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=jqwZthuBmZY" target="_blank">Spring Boot Testing Full Course – Amigoscode (2h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=Geq60OVyBPg" target="_blank">Mockito Tutorial – Coding with John</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=pTuPhJ0DJB8" target="_blank">MockMvc REST Controller Tests – Java Brains</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.testing" target="_blank">Spring Boot Testing Docs</a>
+            <a class="res-link" href="https://www.baeldung.com/spring-boot-testing" target="_blank">Baeldung: Spring Boot Testing Guide</a>
+            <a class="res-link" href="https://site.mockito.org/" target="_blank">Mockito Official Documentation</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Write unit tests for UserService.createUser() — test: (1) success, (2) duplicate email throws exception. Write MockMvc test for POST /users: (1) valid body returns 201, (2) invalid body returns 400. Run with Maven: mvn test.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-day-card">
+        <div class="res-day-header">
+          <span class="res-day-num">DAY 27</span>
+          <div class="res-day-info">
+            <div class="res-day-topic">Docker — Containerize Your App</div>
+            <div class="res-day-desc">Write a Dockerfile for your Spring Boot app. Build and run the container. Use docker-compose to run your app + PostgreSQL together. This is how every modern backend is deployed — knowing this puts you ahead of most juniors.</div>
+          </div>
+        </div>
+        <div class="res-day-body">
+          <div>
+            <div class="res-col-label yt">▶ Video Content</div>
+            <a class="res-link" href="https://www.youtube.com/watch?v=p28piYY_wv8" target="_blank">Docker + Spring Boot – Amigoscode (1h)</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=HSE-ypBCR2A" target="_blank">Docker Compose with Spring Boot + Postgres</a>
+            <a class="res-link" href="https://www.youtube.com/watch?v=pg19Z8LL06w" target="_blank">Docker Tutorial for Beginners – TechWorld with Nana</a>
+          </div>
+          <div>
+            <div class="res-col-label doc">📄 Reading / Docs</div>
+            <a class="res-link" href="https://spring.io/guides/gs/spring-boot-docker/" target="_blank">Spring: Spring Boot with Docker</a>
+            <a class="res-link" href="https://www.baeldung.com/dockerizing-spring-boot-application" target="_blank">Baeldung: Dockerizing Spring Boot</a>
+            <a class="res-link" href="https://docs.docker.com/compose/gettingstarted/" target="_blank">Docker Compose: Getting Started</a>
+          </div>
+          <div>
+            <div class="res-col-label ex">✏ Practice Task</div>
+            <div class="ex-task">
+              <strong>// Build This</strong>
+              Write a Dockerfile for your Spring Boot app (multi-stage build). Write a docker-compose.yml with app + postgres services. Run docker-compose up and verify your API works from Postman hitting localhost:8080. Push the image to Docker Hub.
+            </div>
+            <a class="res-link" href="https://hub.docker.com/" target="_blank">Docker Hub Account Setup</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- GENERAL RESOURCES -->
+  <div class="res-week" style="margin-bottom: 0;">
+    <div class="res-week-header">
+      <span class="res-week-badge" style="background:rgba(251,191,36,0.15);color:var(--highlight);border-color:rgba(251,191,36,0.3);">Essential</span>
+      <span class="res-week-title">Core References & Communities</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+      <div class="res-day-card">
+        <div style="padding:16px 20px;">
+          <div class="res-col-label yt" style="margin-bottom:10px;">▶ YouTube Channels</div>
+          <a class="res-link" href="https://www.youtube.com/@amigoscode" target="_blank">Amigoscode (Java + Spring Boot)</a>
+          <a class="res-link" href="https://www.youtube.com/@MoshHamedani" target="_blank">Mosh Hamedani (Core Java)</a>
+          <a class="res-link" href="https://www.youtube.com/@BroCodez" target="_blank">Bro Code (Java Basics)</a>
+          <a class="res-link" href="https://www.youtube.com/@DanVega" target="_blank">Dan Vega (Spring Boot)</a>
+          <a class="res-link" href="https://www.youtube.com/@DailyCodeBuffer" target="_blank">Daily Code Buffer (Spring Projects)</a>
+          <a class="res-link" href="https://www.youtube.com/@CodingWithJohn" target="_blank">Coding with John (Java Deep Dives)</a>
+        </div>
+      </div>
+      <div class="res-day-card">
+        <div style="padding:16px 20px;">
+          <div class="res-col-label doc" style="margin-bottom:10px;">📄 Reference Docs</div>
+          <a class="res-link" href="https://docs.oracle.com/javase/tutorial/" target="_blank">Oracle Java Tutorials (Complete)</a>
+          <a class="res-link" href="https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/" target="_blank">Spring Boot Reference (Official)</a>
+          <a class="res-link" href="https://www.baeldung.com" target="_blank">Baeldung (Best Java/Spring Blog)</a>
+          <a class="res-link" href="https://spring.io/guides" target="_blank">Spring Official Guides</a>
+          <a class="res-link" href="https://www.javadoc.io/doc/org.springframework.boot/spring-boot/latest/index.html" target="_blank">Spring Boot Javadoc</a>
+        </div>
+      </div>
+      <div class="res-day-card">
+        <div style="padding:16px 20px;">
+          <div class="res-col-label ex" style="margin-bottom:10px;">✏ Practice Platforms</div>
+          <a class="res-link" href="https://exercism.org/tracks/java" target="_blank">Exercism — Java Track (best for beginners)</a>
+          <a class="res-link" href="https://www.codingbat.com/java" target="_blank">CodingBat — Java logic drills</a>
+          <a class="res-link" href="https://leetcode.com/tag/array/" target="_blank">LeetCode — Java problems</a>
+          <a class="res-link" href="https://www.hackerrank.com/domains/java" target="_blank">HackerRank — Java Domain</a>
+          <a class="res-link" href="https://github.com/eugenp/tutorials" target="_blank">Baeldung GitHub (1000+ examples)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== PROJECTS PANEL ===== -->
+<div id="panel-projects" class="panel">
+  <div class="section-label">// hands-on builds</div>
+  <h2 class="section-title">4 Projects That Build Real Skills</h2>
+  <div class="projects-timeline">
+    <div class="project-item">
+      <div class="project-dot">W1</div>
+      <div class="project-content">
+        <div class="project-week">Week 1 · Core Java</div>
+        <div class="project-title">Bank Account System</div>
+        <div class="project-desc">Build a console-based bank application. Model Account, SavingsAccount, and CheckingAccount using inheritance. Handle transactions, balances, overdraft protection. Forces you to apply OOP for real data modelling instead of toy examples.</div>
+        <div class="feature-list">
+          <span class="feature-tag">Classes & Inheritance</span>
+          <span class="feature-tag">Encapsulation</span>
+          <span class="feature-tag">Method Overriding</span>
+          <span class="feature-tag">Scanner Input</span>
+          <span class="feature-tag">ArrayList</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-item">
+      <div class="project-dot">W2</div>
+      <div class="project-content">
+        <div class="project-week">Week 2 · Java Collections & Streams</div>
+        <div class="project-title">Student Grade Tracker</div>
+        <div class="project-desc">A full in-memory student management system. Add, search, update, delete students. Generate grade reports using Streams. Sort by GPA, filter by department. Introduces you to thinking functionally — transforming data pipelines instead of writing loops.</div>
+        <div class="feature-list">
+          <span class="feature-tag">HashMap & ArrayList</span>
+          <span class="feature-tag">Stream API</span>
+          <span class="feature-tag">Lambdas</span>
+          <span class="feature-tag">Custom Exceptions</span>
+          <span class="feature-tag">Optional</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-item">
+      <div class="project-dot">W3</div>
+      <div class="project-content">
+        <div class="project-week">Week 3 · Spring Boot REST</div>
+        <div class="project-title">Task Management REST API</div>
+        <div class="project-desc">A full RESTful API for a task manager. Users can create tasks, assign priorities, mark complete, and filter by status. Teaches the full Spring layered architecture: Controller → Service → Repository → DB. Test every endpoint with Postman.</div>
+        <div class="feature-list">
+          <span class="feature-tag">Spring MVC</span>
+          <span class="feature-tag">Spring Data JPA</span>
+          <span class="feature-tag">PostgreSQL</span>
+          <span class="feature-tag">Bean Validation</span>
+          <span class="feature-tag">Global ExceptionHandler</span>
+          <span class="feature-tag">DTO Pattern</span>
+        </div>
+      </div>
+    </div>
+    <div class="project-item">
+      <div class="project-dot">W4</div>
+      <div class="project-content">
+        <div class="project-week">Week 4 · Capstone</div>
+        <div class="project-title">Expense Tracker API (Production-Grade)</div>
+        <div class="project-desc">A secured, tested, containerized expense tracking API. Users register, login with JWT, and manage their own expenses. Includes pagination, multi-profile config, Dockerized deployment. This is the project you put on GitHub and reference in interviews.</div>
+        <div class="feature-list">
+          <span class="feature-tag">Spring Security + JWT</span>
+          <span class="feature-tag">JUnit 5 + Mockito</span>
+          <span class="feature-tag">MockMvc Tests</span>
+          <span class="feature-tag">Pagination</span>
+          <span class="feature-tag">Docker</span>
+          <span class="feature-tag">Dev/Prod Profiles</span>
+          <span class="feature-tag">Swagger/OpenAPI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MINDSET PANEL ===== -->
+<div id="panel-mindset" class="panel">
+  <div class="section-label">// how experts think</div>
+  <h2 class="section-title">The Expert Java Developer Mindset</h2>
+  <div class="mindset-grid">
+    <div class="mindset-card"><div class="mindset-icon">🏗️</div><div class="mindset-title">Design Before You Code</div><div class="mindset-body">Experts spend 20% of their time thinking about structure before touching the keyboard. They ask: What are my entities? What are the relationships? Where does validation live? Beginners jump straight to writing code and refactor endlessly later.</div></div>
+    <div class="mindset-card"><div class="mindset-icon">🔒</div><div class="mindset-title">Encapsulation Is a Contract</div><div class="mindset-body">A professional treats every class as a published interface. Fields are private by default. Methods expose only what's necessary. They never expose internal state directly. This mindset prevents entire categories of bugs before they can happen.</div></div>
+    <div class="mindset-card"><div class="mindset-icon">⚡</div><div class="mindset-title">Read Stack Traces, Don't Fear Them</div><div class="mindset-body">Beginners panic at exceptions. Experts read the stack trace from the bottom up, identify the root cause immediately, and know which layer — controller, service, or data — is responsible. Every exception tells a story; learn to read it.</div></div>
+    <div class="mindset-card"><div class="mindset-icon">🧪</div><div class="mindset-title">Test As You Build, Not After</div><div class="mindset-body">Experts write tests alongside code — or write them first (TDD). They never trust untested code in production. Beginners treat testing as an afterthought. Writing a test first forces you to design a clean, testable API from the start.</div></div>
+    <div class="mindset-card"><div class="mindset-icon">📐</div><div class="mindset-title">Separation of Concerns Is Non-Negotiable</div><div class="mindset-body">In Spring Boot: Controllers talk to Services. Services contain business logic. Repositories touch the database. Never put SQL queries in a Controller. Never put HTTP response logic in a Service. This makes your code testable and maintainable.</div></div>
+    <div class="mindset-card"><div class="mindset-icon">🔍</div><div class="mindset-title">Question Every Dependency</div><div class="mindset-body">Professionals look at every library and ask: What problem does this solve? How does it work? What does it cost? Beginners copy-paste annotations without understanding Spring's proxy model, IoC container, or how @Transactional actually works under the hood.</div></div>
+  </div>
+  <div class="vs-block">
+    <div class="vs-col beginner">
+      <div class="vs-label">// Beginner Thinking</div>
+      <div class="vs-item">Writes code first, designs never</div>
+      <div class="vs-item">Puts business logic in Controllers</div>
+      <div class="vs-item">Returns raw entities from REST endpoints</div>
+      <div class="vs-item">Uses public fields and setters everywhere</div>
+      <div class="vs-item">Catches Exception broadly and prints stack trace</div>
+      <div class="vs-item">Tests manually with Postman only</div>
+      <div class="vs-item">Copies @annotations without understanding them</div>
+    </div>
+    <div class="vs-col expert">
+      <div class="vs-label">// Expert Thinking</div>
+      <div class="vs-item">Models the domain first, then codes it</div>
+      <div class="vs-item">Controller → Service → Repository strictly</div>
+      <div class="vs-item">Always uses DTOs to shape API responses</div>
+      <div class="vs-item">Encapsulates state, exposes behavior</div>
+      <div class="vs-item">Creates custom exceptions with meaningful messages</div>
+      <div class="vs-item">Writes unit + integration tests before shipping</div>
+      <div class="vs-item">Understands what @Transactional actually does</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MISTAKES PANEL ===== -->
+<div id="panel-mistakes" class="panel">
+  <div class="section-label">// what slows you down</div>
+  <h2 class="section-title">8 Mistakes That Kill Java Progress</h2>
+  <div class="mistake-list">
+    <div class="mistake-card"><div class="mistake-header"><span class="mistake-num">01</span><span class="mistake-title">Skipping Core Java to Rush into Spring Boot</span></div><div class="mistake-body"><div class="mistake-why"><strong>// Why It Happens</strong>Spring Boot looks exciting and job-ready. Developers skip Java fundamentals and copy tutorials blindly, without understanding the language underneath the framework.</div><div class="mistake-fix"><strong>// The Fix</strong>Spend 2 solid weeks on Core Java first. If you don't understand interfaces, generics, and exceptions deeply, Spring Boot will be confusing magic. The framework rewards Java fluency.</div></div></div>
+    <div class="mistake-card"><div class="mistake-header"><span class="mistake-num">02</span><span class="mistake-title">Treating @Autowired as Magic Without Understanding DI</span></div><div class="mistake-body"><div class="mistake-why"><strong>// Why It Happens</strong>Beginners add @Autowired and it works, so they never investigate why. This leads to circular dependency errors, null injection issues, and confusion when @Autowired fails.</div><div class="mistake-fix"><strong>// The Fix</strong>Learn IoC and the Spring container from day 1 of Spring Boot. Understand that Spring creates bean instances, manages lifecycle, and injects them — you're not calling new. Use constructor injection instead of field injection.</div></div></div>
+    <div class="mistake-card"><div class="mistake-header"><span class="mistake-num">03</span><span class="mistake-title">Returning Entities Directly from REST Endpoints</span></div><div class="mistake-body"><div class="mistake-why"><strong>// Why It Happens</strong>It's the shortest path — return the JPA entity directly. Tutorials do it. But this leaks database structure, causes infinite recursion with bidirectional relationships, and exposes sensitive data.</div><div class="mistake-fix"><strong>// The Fix</strong>Always use DTOs (Data Transfer Objects) for API responses. Create a UserResponseDTO that contains only what the client needs. Use a mapper (manual or MapStruct) to convert. This is non-negotiable in production code.</div></div></div>
+    <div class="mistake-card"><div class="mistake-header"><span class="mistake-num">04</span><span class="mistake-title">Swallowing Exceptions or Catching Exception Broadly</span></div><div class="mistake-body"><div class="mistake-why"><strong>// Why It Happens</strong>Beginners fear red text in the console. They wrap everything in try-catch and print the stack trace, hiding real errors and making debugging impossible.</div><div class="mistake-fix"><strong>// The Fix</strong>Create custom exceptions (ResourceNotFoundException, DuplicateEmailException). Use a @ControllerAdvice global handler that maps exceptions to proper HTTP status codes. Let exceptions bubble up correctly — don't swallow them.</div></div></div>
+    <div class="mistake-card"><div class="mistake-header"><span class="mistake-num">05</span><span class="mistake-title">Writing Business Logic in Controllers</span></div><div class="mistake-body"><div class="mistake-why"><strong>// Why It Happens</strong>Controllers are the first thing you write. It feels natural to put everything there since it's where the request comes in. Fat controllers are common in beginner codebases.</div><div class="mistake-fix"><strong>// The Fix</strong>Controllers only: parse input, call the service, return the response. That's it — 10-15 lines max. All business rules, calculations, and decisions live in the Service layer. This makes code testable and maintainable.</div></div></div>
+    <div class="mistake-card"><div class="mistake-header"><span class="mistake-num">06</span><span class="mistake-title">Never Writing Tests</span></div><div class="mistake-body"><div class="mistake-why"><strong>// Why It Happens</strong>Testing feels like extra work when you're learning. "I'll add tests later." Later never comes. Untested code accumulates and becomes too fragile to refactor.</div><div class="mistake-fix"><strong>// The Fix</strong>Week 4 of this roadmap includes testing specifically. Write at least one unit test per Service method and one integration test per Controller endpoint. Use @MockBean to isolate layers. Untested Spring Boot code is a liability in any job.</div></div></div>
+    <div class="mistake-card"><div class="mistake-header"><span class="mistake-num">07</span><span class="mistake-title">Using == to Compare Strings and Objects</span></div><div class="mistake-body"><div class="mistake-why"><strong>// Why It Happens</strong>Coming from JavaScript or Python where == compares value, beginners apply the same logic in Java. This passes in some cases (string pool) and silently fails in others.</div><div class="mistake-fix"><strong>// The Fix</strong>In Java: == compares references. .equals() compares values. Always use .equals() for String, wrapper types, and objects. Use Objects.equals(a, b) for null-safe comparisons. This is a fundamental Java rule — memorize it on Day 1.</div></div></div>
+    <div class="mistake-card"><div class="mistake-header"><span class="mistake-num">08</span><span class="mistake-title">Hardcoding Configuration Instead of Using application.properties</span></div><div class="mistake-body"><div class="mistake-why"><strong>// Why It Happens</strong>Beginners hardcode database URLs, API keys, and port numbers directly in Java code. It works locally. Then it breaks in staging. Then secrets get committed to GitHub.</div><div class="mistake-fix"><strong>// The Fix</strong>From day 1 of Spring Boot: put all environment-specific config in application.properties or application.yml. Use @ConfigurationProperties for typed config. Use profiles (application-dev.yml vs application-prod.yml). Never hardcode secrets.</div></div></div>
+  </div>
+</div>
+
+<!-- ===== ASSESSMENT PANEL ===== -->
+<div id="panel-assessment" class="panel">
+  <div class="section-label">// know your starting point</div>
+  <h2 class="section-title">Self-Assessment: Where Are You Now?</h2>
+  <div class="assessment-intro">Answer these questions honestly before starting. Not to gatekeep — but to know exactly where to focus energy. If you can answer all BASIC questions confidently: start at Day 5. If you can answer MID questions: start at Day 8. If you can answer ADVANCED questions: start at Day 15 (Spring Boot directly).</div>
+  <div class="q-grid">
+    <div class="q-card"><div class="q-level level-basic">// Level: Basic Java</div><div class="q-text">Q1 — What is the difference between an int and an Integer in Java? When would you use each?</div><div class="q-hint">Hint: Think about primitives vs objects, null handling, and usage in Collections. If you can't explain autoboxing, start from Day 1.</div></div>
+    <div class="q-card"><div class="q-level level-basic">// Level: Basic OOP</div><div class="q-text">Q2 — Write a class Animal with a method speak(). Make Dog and Cat extend it and override speak() differently. What concept does this demonstrate?</div><div class="q-hint">Expected: A working code example demonstrating polymorphism. Bonus: explain what happens when you call <code>Animal a = new Dog(); a.speak();</code></div></div>
+    <div class="q-card"><div class="q-level level-mid">// Level: Intermediate Java</div><div class="q-text">Q3 — Given a List&lt;String&gt; of names, use the Stream API to filter names that start with "A", convert them to uppercase, sort them, and collect into a new List. Write the code.</div><div class="q-hint">If you need to look up every method: practice Streams more before Spring Boot. If you can write it from memory: you're ready for Week 3.</div></div>
+    <div class="q-card"><div class="q-level level-mid">// Level: Intermediate Java</div><div class="q-text">Q4 — What is the difference between a checked exception and an unchecked exception? Give one example of each and explain when you would create a custom exception.</div><div class="q-hint">This is critical for Spring Boot. <code>IOException</code> vs <code>RuntimeException</code>. How @ExceptionHandler works depends on understanding this distinction.</div></div>
+    <div class="q-card"><div class="q-level level-advanced">// Level: Spring Boot</div><div class="q-text">Q5 — Explain what happens step-by-step when a POST /users request hits your Spring Boot app and a new User is created in the database. Name every layer involved.</div><div class="q-hint">Expected path: DispatcherServlet → Filter Chain → Controller → Service → Repository → JPA → DB → Response. If you can draw this diagram, you're production-ready.</div></div>
+    <div class="q-card"><div class="q-level level-advanced">// Level: Spring Boot Advanced</div><div class="q-text">Q6 — What does @Transactional actually do? What happens without it when you have two database operations in one service method and the second one fails?</div><div class="q-hint">This is a senior-level question. If you can explain dirty reads, rollback behavior, and propagation levels, you understand Spring Data properly. Most juniors get this wrong.</div></div>
+  </div>
+  <div style="margin-top: 40px; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 28px; max-width: 860px;">
+    <div class="section-label">// your next step</div>
+    <div style="font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 16px;">Interpreting Your Results</div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px;">
+      <div style="padding: 16px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.25); border-radius: 3px;"><div style="font-size: 10px; letter-spacing: 2px; color: var(--accent3); margin-bottom: 8px;">ANSWERED Q1–Q2</div><div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Good start. Begin Day 1. Don't skip — gaps in basics cause Spring Boot confusion later.</div></div>
+      <div style="padding: 16px; background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25); border-radius: 3px;"><div style="font-size: 10px; letter-spacing: 2px; color: var(--highlight); margin-bottom: 8px;">ANSWERED Q1–Q4</div><div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Solid Java foundation. Start Day 8. Focus hard on Streams, then jump into Spring Boot Week 3.</div></div>
+      <div style="padding: 16px; background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.25); border-radius: 3px;"><div style="font-size: 10px; letter-spacing: 2px; color: var(--accent); margin-bottom: 8px;">ANSWERED Q1–Q6</div><div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Strong intermediate. Start at Day 15 (Spring Boot). Focus on testing, security, and Docker this month.</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
